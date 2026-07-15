@@ -13,6 +13,9 @@ jobs:
   lint:
     name: Lint
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./backend
     steps:
       - uses: actions/checkout@v4
 
@@ -33,6 +36,9 @@ jobs:
     name: Test
     runs-on: ubuntu-latest
     needs: lint
+    defaults:
+      run:
+        working-directory: ./backend
 
     services:
       mailhog:
@@ -107,7 +113,7 @@ jobs:
       - name: Build and Push Docker image
         uses: docker/build-push-action@v5
         with:
-          context: .
+          context: ./backend
           push: true
           tags: |
             ${{ secrets.DOCKERHUB_USERNAME }}/lms-be:latest
