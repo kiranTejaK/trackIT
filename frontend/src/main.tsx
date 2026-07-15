@@ -17,6 +17,7 @@ import RecoverPassword from "./pages/RecoverPassword"
 import ResetPassword from "./pages/ResetPassword"
 import SettingsPage from "./pages/SettingsPage"
 import Signup from "./pages/Signup"
+import VerifyEmail from "./pages/VerifyEmail"
 import TransactionFormPage from "./pages/TransactionFormPage"
 import TransactionsPage from "./pages/TransactionsPage"
 
@@ -87,6 +88,12 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
               <GuestOnly>
                 <ResetPassword />
               </GuestOnly>
+            }
+          />
+          <Route
+            path="/verify-email"
+            element={
+              <VerifyEmail />
             }
           />
 
