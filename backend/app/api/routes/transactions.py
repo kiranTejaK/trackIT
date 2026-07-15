@@ -25,7 +25,6 @@ from app.schemas import (
     TransactionUpdate,
     TransactionWithInsights,
 )
-from app.services import notification_service
 
 logger = structlog.get_logger()
 
@@ -54,7 +53,7 @@ async def create_transaction_endpoint(
     # First, get insights *before* committing the transaction to avoid skewing the average
     insights = []
     budget_notifications = []
-    
+
     if tx_in.type == "expense":
         from app.services.spending_insight_service import SpendingInsightService
         insights = SpendingInsightService.analyze_transaction(

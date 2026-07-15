@@ -2,14 +2,14 @@ import uuid
 from typing import Any
 
 from fastapi import APIRouter, Depends, HTTPException, status
-from sqlalchemy.orm import Session
 from sqlalchemy.exc import IntegrityError
+from sqlalchemy.orm import Session
 
 from app.api.deps import get_current_user, get_db
-from app.models import Budget, User
+from app.core.redis_client import redis_client
+from app.models import User
 from app.schemas import BudgetCreate, BudgetProgress, BudgetUpdate
 from app.services.budget_service import BudgetService
-from app.core.redis_client import redis_client
 
 router = APIRouter()
 
@@ -43,7 +43,7 @@ async def create_budget(
             status_code=400,
             detail="A budget for this category and month already exists.",
         )
-        
+
     try:
         budget = BudgetService.create(db, current_user.id, budget_in)
     except IntegrityError:
@@ -52,7 +52,7 @@ async def create_budget(
             status_code=400,
             detail="A budget for this category and month already exists.",
         )
-        
+
     await _invalidate_caches(current_user.id)
     return BudgetService.get_progress(db, budget)
 
@@ -86,7 +86,7 @@ async def update_budget(
     budget = BudgetService.get(db, budget_id, current_user.id)
     if not budget:
         raise HTTPException(status_code=404, detail="Budget not found")
-        
+
     budget = BudgetService.update(db, budget, budget_in)
     await _invalidate_caches(current_user.id)
     return BudgetService.get_progress(db, budget)
@@ -105,6 +105,6 @@ async def delete_budget(
     budget = BudgetService.get(db, budget_id, current_user.id)
     if not budget:
         raise HTTPException(status_code=404, detail="Budget not found")
-        
+
     BudgetService.delete(db, budget)
     await _invalidate_caches(current_user.id)

@@ -156,30 +156,30 @@ def send_weekly_report(
             status_code=400, detail="Email sending is not configured."
         )
 
-    from app.services.dashboard_analytics_service import DashboardAnalyticsService
     import datetime
-    
+
+    from app.services.dashboard_analytics_service import DashboardAnalyticsService
+
     now = datetime.datetime.utcnow()
     summary = DashboardAnalyticsService.get_dashboard_summary(
         session=session, user_id=current_user.id, month=now.month, year=now.year
     )
-    
+
     from app.utils import generate_weekly_report_email, send_email
-    
+
     email_data = generate_weekly_report_email(
-        email_to=current_user.email,
         user_name=current_user.full_name or current_user.email,
         total_income=float(summary.total_income),
         total_expense=float(summary.total_expense),
         balance=float(summary.net_cash_flow),
     )
-    
+
     send_email(
         email_to=current_user.email,
         subject=email_data.subject,
         html_content=email_data.html_content,
     )
-    
+
     return Message(message="Weekly report sent successfully")
 
 

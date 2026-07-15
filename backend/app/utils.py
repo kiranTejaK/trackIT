@@ -251,7 +251,7 @@ def generate_workspace_invitation_email(
 # ---------------------------------------------------------------------------
 
 def generate_expense_alert_email(
-    email_to: str, user_name: str, amount: float, threshold: float
+    user_name: str, amount: float, threshold: float
 ) -> EmailData:
     subject = f"[TrackIT] ⚠️ Large expense recorded: ₹{amount:,.2f}"
     html_content = render_email_template(
@@ -268,7 +268,7 @@ def generate_expense_alert_email(
 
 
 def generate_monthly_budget_alert_email(
-    email_to: str, user_name: str, month_total: float, budget_limit: float
+    user_name: str, month_total: float, budget_limit: float
 ) -> EmailData:
     subject = f"[TrackIT] 🔴 Monthly budget exceeded: ₹{month_total:,.2f}"
     html_content = render_email_template(
@@ -284,9 +284,9 @@ def generate_monthly_budget_alert_email(
     return EmailData(html_content=html_content, subject=subject)
 
 def generate_weekly_report_email(
-    email_to: str, user_name: str, total_income: float, total_expense: float, balance: float
+    user_name: str, total_income: float, total_expense: float, balance: float
 ) -> EmailData:
-    subject = f"[TrackIT] Your Weekly Financial Report"
+    subject = "[TrackIT] Your Weekly Financial Report"
     html_content = render_email_template(
         template_name="weekly_report.html",
         context={

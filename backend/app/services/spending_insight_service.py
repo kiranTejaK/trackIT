@@ -1,7 +1,7 @@
 import uuid
 from decimal import Decimal
 
-from sqlalchemy import and_, extract, func, select
+from sqlalchemy import and_, func, select
 from sqlalchemy.orm import Session
 
 from app.models import Transaction
@@ -27,7 +27,7 @@ class SpendingInsightService:
         )
         if exclude_tx_id:
             where_clause = and_(where_clause, Transaction.id != exclude_tx_id)
-            
+
         # We need average and count
         stmt = select(
             func.avg(Transaction.amount), func.count(Transaction.id)
@@ -35,13 +35,12 @@ class SpendingInsightService:
         row = session.execute(stmt).first()
         if not row:
             return None
-            
+
         avg_spent, count = row
         if not count or count < cls.MIN_HISTORY_RECORDS or not avg_spent:
             return None
-            
+
         if new_amount >= avg_spent * cls.CATEGORY_ANOMALY_THRESHOLD:
-            ratio = int(new_amount / avg_spent)
             return SpendingInsight(
                 type="CATEGORY_ANOMALY",
                 message=f"An unusually high transaction of ₹{new_amount:,.0f} was detected in your {category} category (normally averages ₹{avg_spent:,.0f}).",
@@ -56,9 +55,9 @@ class SpendingInsightService:
         Run all insight checks for a new transaction.
         """
         insights = []
-        
+
         cat_insight = cls.check_category_anomaly(session, user_id, category, amount)
         if cat_insight:
             insights.append(cat_insight)
-            
+
         return insights

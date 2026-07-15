@@ -1,7 +1,6 @@
 import uuid
-from datetime import datetime
+from collections.abc import Sequence
 from decimal import Decimal
-from typing import Sequence
 
 from sqlalchemy import and_, extract, func, select
 from sqlalchemy.orm import Session
@@ -15,7 +14,7 @@ class BudgetService:
     def calculate_status(spent: Decimal, limit: Decimal) -> BudgetStatus:
         if limit == 0:
             return "EXCEEDED" if spent > 0 else "SAFE"
-        
+
         ratio = spent / limit
         if ratio >= 1.0:
             if ratio == 1.0:

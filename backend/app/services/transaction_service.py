@@ -3,9 +3,7 @@ Transaction service — aggregation, dashboard computation, and summary logic.
 All database queries are here; routes stay thin.
 """
 import uuid
-from datetime import date, datetime
 from decimal import Decimal
-from collections import defaultdict
 
 from sqlalchemy import extract, func, select
 from sqlalchemy.orm import Session

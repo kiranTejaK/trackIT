@@ -2,7 +2,6 @@
 Dashboard summary endpoint with Redis caching.
 Cache TTL: 5 minutes. Invalidated on any transaction mutation.
 """
-import json
 from datetime import datetime
 
 import structlog

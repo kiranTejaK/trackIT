@@ -1,6 +1,5 @@
 import uuid
 from datetime import date
-from decimal import Decimal
 from typing import Any
 
 from sqlalchemy import select
@@ -9,7 +8,6 @@ from sqlalchemy.orm import Session
 from app.core.security import get_password_hash, verify_password
 from app.models import Transaction, User
 from app.schemas import TransactionCreate, TransactionUpdate, UserCreate, UserUpdate
-
 
 # ---------------------------------------------------------------------------
 # User CRUD (kept from template)

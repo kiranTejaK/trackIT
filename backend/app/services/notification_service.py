@@ -43,7 +43,6 @@ def check_expense_threshold(*, user: User, amount: Decimal) -> None:
     from app.utils import generate_expense_alert_email
 
     email_data = generate_expense_alert_email(
-        email_to=user.email,
         user_name=user.full_name or user.email,
         amount=float(amount),
         threshold=float(threshold),
@@ -66,7 +65,6 @@ def check_monthly_budget(*, user: User, month_total: Decimal) -> None:
     from app.utils import generate_monthly_budget_alert_email
 
     email_data = generate_monthly_budget_alert_email(
-        email_to=user.email,
         user_name=user.full_name or user.email,
         month_total=float(month_total),
         budget_limit=float(limit),

@@ -1,5 +1,4 @@
 import uuid
-from datetime import datetime
 from decimal import Decimal
 
 from sqlalchemy import and_, extract, func, select
@@ -7,7 +6,6 @@ from sqlalchemy.orm import Session
 
 from app.models import Budget, Transaction
 from app.schemas import (
-    BudgetProgress,
     CategoryDistribution,
     DashboardSummary,
     SpendingInsight,
@@ -21,7 +19,7 @@ class DashboardAnalyticsService:
     def get_dashboard_summary(
         session: Session, user_id: uuid.UUID, month: int, year: int
     ) -> DashboardSummary:
-        
+
         # 1. Monthly Income & Expense
         monthly_stmt = select(
             Transaction.type, func.sum(Transaction.amount)
@@ -32,11 +30,11 @@ class DashboardAnalyticsService:
                 extract("year", Transaction.transaction_date) == year,
             )
         ).group_by(Transaction.type)
-        
+
         monthly_results = session.execute(monthly_stmt).all()
         monthly_income = Decimal("0.0")
         monthly_expense = Decimal("0.0")
-        
+
         for tx_type, total in monthly_results:
             if tx_type == "income":
                 monthly_income = total
@@ -47,12 +45,12 @@ class DashboardAnalyticsService:
         total_stmt = select(
             Transaction.type, func.sum(Transaction.amount), func.count(Transaction.id)
         ).where(Transaction.owner_id == user_id).group_by(Transaction.type)
-        
+
         total_results = session.execute(total_stmt).all()
         total_income = Decimal("0.0")
         total_expense = Decimal("0.0")
         total_transactions = 0
-        
+
         for tx_type, total, count in total_results:
             total_transactions += count
             if tx_type == "income":
@@ -78,7 +76,7 @@ class DashboardAnalyticsService:
                 extract("year", Transaction.transaction_date) == year,
             )
         ).group_by(Transaction.category).order_by(func.sum(Transaction.amount).desc())
-        
+
         cat_results = session.execute(cat_stmt).all()
         category_distribution = []
         for cat, amount in cat_results:
@@ -97,7 +95,7 @@ class DashboardAnalyticsService:
                 )
             ).order_by(Budget.category)
         ).all()
-        
+
         budget_overview = []
         for b in budgets:
             # We can use the cat_results we already fetched for performance!
@@ -106,7 +104,7 @@ class DashboardAnalyticsService:
                 if cat == b.category:
                     spent = amount
                     break
-            
+
             budget_overview.append(BudgetService.get_progress(session, b, spent))
 
         # 5. Smart Insights (Overall user insights, e.g. from recent large expenses)
@@ -117,22 +115,22 @@ class DashboardAnalyticsService:
             .order_by(Transaction.transaction_date.desc(), Transaction.created_at.desc())
             .limit(5)
         ).all()
-        
+
         smart_insights = []
         from app.services.spending_insight_service import SpendingInsightService
-        
+
         for tx in recent_txs:
             cat_insight = SpendingInsightService.check_category_anomaly(session, user_id, tx.category, tx.amount, exclude_tx_id=tx.id)
             if cat_insight and not any(i.message == cat_insight.message for i in smart_insights):
                 smart_insights.append(cat_insight)
-                
+
         # 5b. Budget Warnings
         for b in budget_overview:
             if b.status == "EXCEEDED":
                 smart_insights.append(SpendingInsight(type="BUDGET_WARNING", message=f"⚠️ You exceeded your {b.category} budget by ₹{abs(Decimal(b.remaining)):.2f}."))
             elif b.status == "WARNING":
                 smart_insights.append(SpendingInsight(type="BUDGET_WARNING", message=f"⚠️ You have used {b.progress_percentage:.0f}% of your {b.category} budget."))
-                
+
         # 5c. Top Category Insight
         if category_distribution and len(category_distribution) > 0:
             top_cat = category_distribution[0]
@@ -146,7 +144,7 @@ class DashboardAnalyticsService:
             .order_by(Transaction.transaction_date.desc(), Transaction.created_at.desc())
             .limit(10)
         ).all()
-        
+
         latest_transactions = [
             TransactionPublic.model_validate(tx) for tx in latest_txs
         ]
