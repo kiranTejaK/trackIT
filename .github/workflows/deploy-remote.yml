@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+  workflow_dispatch:
 
 env:
   DOCKER_IMAGE_BACKEND: ${{ secrets.DOCKERHUB_USERNAME }}/doitapp-backend
