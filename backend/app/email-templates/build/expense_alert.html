@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Large Expense Alert</title>
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f5f5; margin: 0; padding: 0; }
+    .container { max-width: 560px; margin: 40px auto; background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 2px 16px rgba(0,0,0,0.08); }
+    .header { background: linear-gradient(135deg, #f97316, #fb923c); padding: 32px 40px; text-align: center; }
+    .header h1 { color: #fff; margin: 0; font-size: 22px; font-weight: 700; }
+    .header .icon { font-size: 40px; margin-bottom: 12px; }
+    .body { padding: 32px 40px; }
+    .body p { color: #444; line-height: 1.6; margin: 0 0 16px; }
+    .amount-box { background: #fff5f0; border: 2px solid #f97316; border-radius: 8px; padding: 20px; text-align: center; margin: 24px 0; }
+    .amount-box .label { color: #888; font-size: 13px; text-transform: uppercase; letter-spacing: 0.5px; }
+    .amount-box .value { color: #f97316; font-size: 32px; font-weight: 700; }
+    .footer { background: #f9fafb; padding: 20px 40px; text-align: center; }
+    .footer p { color: #999; font-size: 12px; margin: 0; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div class="icon">⚠️</div>
+      <h1>Large Expense Alert</h1>
+    </div>
+    <div class="body">
+      <p>Hi <strong>{{ user_name }}</strong>,</p>
+      <p>A new expense has been recorded in your <strong>{{ project_name }}</strong> account that exceeds your configured alert threshold.</p>
+      <div class="amount-box">
+        <div class="label">Expense Amount</div>
+        <div class="value">₹{{ amount }}</div>
+      </div>
+      <p>Your configured alert threshold is <strong>₹{{ threshold }}</strong>.</p>
+      <p>If this transaction looks incorrect, please log in to your account to review and manage your transactions.</p>
+      <p>Stay on top of your finances! 💪</p>
+    </div>
+    <div class="footer">
+      <p>© {{ year }} {{ project_name }}. This is an automated notification.</p>
+    </div>
+  </div>
+</body>
+</html>

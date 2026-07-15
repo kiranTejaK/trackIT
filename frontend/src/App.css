@@ -1,0 +1,439 @@
+/* ================================================================
+   App.css — TrackIT Theme
+   ================================================================ */
+
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
+
+:root {
+  /* Brand Colors */
+  --ui-main: #2563eb;       /* Blue 600 (Secondary) */
+  --ui-main-light: #eff6ff; /* Blue 50 (Tertiary) */
+  --ui-main-dark: #1e3a8a;  /* Blue 900 (Primary) */
+
+  /* Status Colors */
+  --income-color: #22c55e;
+  --income-bg: #f0fdf4;
+  --income-border: #86efac;
+  --expense-color: #ef4444;
+  --expense-bg: #fef2f2;
+  --expense-border: #fca5a5;
+  --balance-color: #3b82f6;
+  --balance-bg: #eff6ff;
+
+  /* Backgrounds */
+  --bg-light: #f8fafc;
+  --bg-card: #ffffff;
+  --border-color: #e2e8f0;
+
+  font-family: "Inter", system-ui, sans-serif;
+}
+
+.card {
+  background-color: var(--bg-card) !important;
+  border-color: var(--border-color) !important;
+  color: var(--bs-body-color);
+}
+
+/* ================================================================
+   Dark Theme Overrides
+   ================================================================ */
+[data-bs-theme="dark"] {
+  --bs-body-bg: #0f172a;
+  --bs-body-color: #e2e8f0;
+  --bs-tertiary-bg: #1e293b;
+  --bs-secondary-bg: #0f172a;
+  --bs-border-color: #334155;
+  --bs-border-color-translucent: rgba(51, 65, 85, 0.5);
+  --bs-input-border-color: #475569;
+  --bs-input-bg: #1e293b;
+  --bs-input-color: #e2e8f0;
+  --bg-card: #1e293b;
+  --border-color: #334155;
+}
+
+[data-bs-theme="dark"] .logo-img {
+  /* Invert white to black, restore blue hues, and make black background transparent */
+  filter: invert(1) hue-rotate(180deg) brightness(1.2);
+  mix-blend-mode: screen;
+}
+
+/* ================================================================
+   Global
+   ================================================================ */
+html {
+  font-size: 14px;
+}
+
+body {
+  font-family: "Inter", system-ui, sans-serif;
+}
+
+/* ================================================================
+   Sidebar
+   ================================================================ */
+.sidebar-link {
+  transition: background-color 0.15s ease, color 0.15s ease;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.sidebar-link:hover:not(.active) {
+  background-color: var(--bs-tertiary-bg);
+}
+
+.sidebar-link.active {
+  background-color: var(--ui-main) !important;
+  color: #fff !important;
+}
+
+/* ================================================================
+   Buttons
+   ================================================================ */
+.btn-primary {
+  --bs-btn-bg: var(--ui-main);
+  --bs-btn-border-color: var(--ui-main);
+  --bs-btn-hover-bg: var(--ui-main-dark);
+  --bs-btn-hover-border-color: var(--ui-main-dark);
+  --bs-btn-active-bg: #c2410c;
+  --bs-btn-active-border-color: #c2410c;
+  --bs-btn-color: #fff;
+  --bs-btn-disabled-bg: var(--ui-main);
+  --bs-btn-disabled-border-color: var(--ui-main);
+  font-weight: 500;
+}
+
+a,
+.btn-link {
+  --bs-link-color: var(--ui-main);
+  --bs-link-hover-color: var(--ui-main-dark);
+}
+
+/* ================================================================
+   Dashboard Stat Cards
+   ================================================================ */
+.stat-card {
+  border: none;
+  border-radius: 16px;
+  padding: 24px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.stat-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12) !important;
+}
+
+.stat-card .stat-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+}
+
+.stat-card .stat-value {
+  font-size: 1.75rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.stat-card .stat-label {
+  font-size: 0.8rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  opacity: 0.7;
+}
+
+.stat-card .stat-sub {
+  font-size: 0.78rem;
+  opacity: 0.65;
+}
+
+/* Card accent variants */
+.stat-card-income {
+  background: var(--income-bg);
+  border-left: 4px solid var(--income-color) !important;
+}
+
+.stat-card-expense {
+  background: var(--expense-bg);
+  border-left: 4px solid var(--expense-color) !important;
+}
+
+.stat-card-balance {
+  background: var(--balance-bg);
+  border-left: 4px solid var(--balance-color) !important;
+}
+
+.stat-card-total {
+  background: var(--ui-main-light);
+  border-left: 4px solid var(--ui-main) !important;
+}
+
+[data-bs-theme="dark"] .stat-card-income { background: rgba(34,197,94,0.08); }
+[data-bs-theme="dark"] .stat-card-expense { background: rgba(239,68,68,0.08); }
+[data-bs-theme="dark"] .stat-card-balance { background: rgba(59,130,246,0.08); }
+[data-bs-theme="dark"] .stat-card-total { background: rgba(249,115,22,0.08); }
+
+/* ================================================================
+   Transaction Type Badges
+   ================================================================ */
+.badge-income {
+  background-color: var(--income-bg);
+  color: var(--income-color);
+  border: 1px solid var(--income-border);
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 20px;
+}
+
+.badge-expense {
+  background-color: var(--expense-bg);
+  color: var(--expense-color);
+  border: 1px solid var(--expense-border);
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 20px;
+}
+
+[data-bs-theme="dark"] .badge-income {
+  background-color: rgba(34,197,94,0.12);
+  border-color: rgba(34,197,94,0.3);
+}
+
+[data-bs-theme="dark"] .badge-expense {
+  background-color: rgba(239,68,68,0.12);
+  border-color: rgba(239,68,68,0.3);
+}
+
+/* ================================================================
+   Category Bar Chart
+   ================================================================ */
+.category-bar-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.category-bar-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.category-bar-label {
+  font-size: 0.78rem;
+  font-weight: 500;
+  width: 110px;
+  flex-shrink: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.category-bar-track {
+  flex: 1;
+  height: 8px;
+  background: var(--bs-tertiary-bg);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.category-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--ui-main), var(--ui-main-dark));
+  border-radius: 4px;
+  transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.category-bar-amount {
+  font-size: 0.78rem;
+  font-weight: 600;
+  width: 90px;
+  text-align: right;
+  flex-shrink: 0;
+}
+
+/* ================================================================
+   Transaction Table
+   ================================================================ */
+.tx-table th {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-bottom: 2px solid var(--bs-border-color);
+  color: var(--bs-secondary-color);
+}
+
+.tx-table td {
+  font-size: 0.875rem;
+  vertical-align: middle;
+}
+
+.tx-amount-income {
+  color: var(--income-color);
+  font-weight: 600;
+}
+
+.tx-amount-expense {
+  color: var(--expense-color);
+  font-weight: 600;
+}
+
+/* ================================================================
+   Toast Notifications
+   ================================================================ */
+.toast-container-custom {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.toast-item {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 14px 18px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  min-width: 260px;
+  max-width: 360px;
+  animation: toast-in 0.25s ease;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.toast-item.toast-success { border-left: 4px solid var(--income-color); }
+.toast-item.toast-error   { border-left: 4px solid var(--expense-color); }
+.toast-item.toast-info    { border-left: 4px solid var(--balance-color); }
+
+@keyframes toast-in {
+  from { opacity: 0; transform: translateX(20px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+/* ================================================================
+   Page Layout
+   ================================================================ */
+.page-header {
+  margin-bottom: 24px;
+}
+
+.page-header h1 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.page-header p {
+  color: var(--bs-secondary-color);
+  margin: 0;
+  font-size: 0.875rem;
+}
+
+/* ================================================================
+   Form Card
+   ================================================================ */
+.form-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  padding: 32px;
+  max-width: 640px;
+}
+
+/* ================================================================
+   Empty State
+   ================================================================ */
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+}
+
+.empty-state .empty-icon {
+  font-size: 48px;
+  opacity: 0.3;
+  margin-bottom: 16px;
+}
+
+/* ================================================================
+   Utility
+   ================================================================ */
+.text-danger,
+.alert-danger {
+  color: #ef4444;
+}
+
+.bg-body-tertiary {
+  background-color: var(--bs-tertiary-bg) !important;
+}
+
+/* Insights Ticker */
+.insights-ticker-container {
+  display: flex;
+  align-items: center;
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  overflow: hidden;
+  height: 48px;
+}
+
+.insights-ticker-label {
+  padding: 0 16px;
+  font-weight: 600;
+  font-size: 0.875rem;
+  background-color: var(--bg-card);
+  color: var(--bs-body-color);
+  border-right: 1px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  height: 100%;
+  z-index: 2;
+  white-space: nowrap;
+}
+
+.insights-ticker-wrap {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  position: relative;
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.insights-ticker-move {
+  display: flex;
+  width: max-content;
+  white-space: nowrap;
+  animation: marquee 45s linear infinite;
+}
+
+.insights-ticker-wrap:hover .insights-ticker-move {
+  animation-play-state: paused;
+}
+
+.insights-ticker-item {
+  padding: 0 40px;
+  font-size: 0.9rem;
+  color: var(--bs-body-color);
+}
+
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
