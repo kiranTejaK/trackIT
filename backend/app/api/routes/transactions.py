@@ -26,6 +26,7 @@ from app.schemas import (
     TransactionWithInsights,
 )
 from app.services.notification_service import check_category_budget_alert
+
 logger = structlog.get_logger()
 
 router = APIRouter(prefix="/transactions", tags=["transactions"])
