@@ -1,13 +1,21 @@
 import { useEffect, useRef, useState } from "react"
 import { Link } from "react-router-dom"
-import { EXPENSE_CATEGORIES, INCOME_CATEGORIES, transactionsApi } from "@/api/transactions"
 import type { Transaction, TransactionType } from "@/api/transactions"
+import {
+  EXPENSE_CATEGORIES,
+  INCOME_CATEGORIES,
+  transactionsApi,
+} from "@/api/transactions"
 
 const fmt = (val: string | number) =>
-  "₹" + Number(val).toLocaleString("en-IN", { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+  `₹${Number(val).toLocaleString("en-IN", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
 
 const fmtDate = (d: string) =>
-  new Date(d).toLocaleDateString("en-IN", { day: "2-digit", month: "short", year: "numeric" })
+  new Date(d).toLocaleDateString("en-IN", {
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
+  })
 
 const PAGE_SIZE = 15
 
@@ -93,7 +101,9 @@ export default function TransactionsPage() {
       <div className="toast-container-custom">
         {toasts.map((t) => (
           <div key={t.id} className={`toast-item toast-${t.type}`}>
-            <i className={`bi ${t.type === "success" ? "bi-check-circle text-success" : "bi-x-circle text-danger"}`} />
+            <i
+              className={`bi ${t.type === "success" ? "bi-check-circle text-success" : "bi-x-circle text-danger"}`}
+            />
             <span style={{ fontSize: "0.875rem" }}>{t.message}</span>
           </div>
         ))}
@@ -103,16 +113,24 @@ export default function TransactionsPage() {
       <div className="page-header d-flex align-items-center justify-content-between flex-wrap gap-2">
         <div>
           <h1>Transactions</h1>
-          <p>{count.toLocaleString()} total record{count !== 1 ? "s" : ""}</p>
+          <p>
+            {count.toLocaleString()} total record{count !== 1 ? "s" : ""}
+          </p>
         </div>
-        <Link to="/transactions/new" className="btn btn-primary d-flex align-items-center gap-2">
+        <Link
+          to="/transactions/new"
+          className="btn btn-primary d-flex align-items-center gap-2"
+        >
           <i className="bi bi-plus-lg" />
           Add Transaction
         </Link>
       </div>
 
       {/* Filters */}
-      <div className="card border-0 shadow-sm mb-4" style={{ borderRadius: 16 }}>
+      <div
+        className="card border-0 shadow-sm mb-4"
+        style={{ borderRadius: 16 }}
+      >
         <div className="card-body p-3">
           <div className="row g-2 align-items-end">
             <div className="col-12 col-sm-6 col-md-3 col-lg-2">
@@ -120,7 +138,10 @@ export default function TransactionsPage() {
               <select
                 className="form-select form-select-sm"
                 value={typeFilter}
-                onChange={(e) => { setTypeFilter(e.target.value as TransactionType | ""); setPage(0) }}
+                onChange={(e) => {
+                  setTypeFilter(e.target.value as TransactionType | "")
+                  setPage(0)
+                }}
               >
                 <option value="">All Types</option>
                 <option value="income">Income</option>
@@ -128,15 +149,22 @@ export default function TransactionsPage() {
               </select>
             </div>
             <div className="col-12 col-sm-6 col-md-3 col-lg-2">
-              <label className="form-label small fw-semibold mb-1">Category</label>
+              <label className="form-label small fw-semibold mb-1">
+                Category
+              </label>
               <select
                 className="form-select form-select-sm"
                 value={categoryFilter}
-                onChange={(e) => { setCategoryFilter(e.target.value); setPage(0) }}
+                onChange={(e) => {
+                  setCategoryFilter(e.target.value)
+                  setPage(0)
+                }}
               >
                 <option value="">All Categories</option>
                 {allCategories.map((c) => (
-                  <option key={c} value={c}>{c}</option>
+                  <option key={c} value={c}>
+                    {c}
+                  </option>
                 ))}
               </select>
             </div>
@@ -146,7 +174,10 @@ export default function TransactionsPage() {
                 type="date"
                 className="form-control form-control-sm"
                 value={dateFrom}
-                onChange={(e) => { setDateFrom(e.target.value); setPage(0) }}
+                onChange={(e) => {
+                  setDateFrom(e.target.value)
+                  setPage(0)
+                }}
               />
             </div>
             <div className="col-12 col-sm-6 col-md-3 col-lg-2">
@@ -155,11 +186,17 @@ export default function TransactionsPage() {
                 type="date"
                 className="form-control form-control-sm"
                 value={dateTo}
-                onChange={(e) => { setDateTo(e.target.value); setPage(0) }}
+                onChange={(e) => {
+                  setDateTo(e.target.value)
+                  setPage(0)
+                }}
               />
             </div>
             <div className="col-auto">
-              <button className="btn btn-sm btn-outline-secondary" onClick={resetFilters}>
+              <button
+                className="btn btn-sm btn-outline-secondary"
+                onClick={resetFilters}
+              >
                 <i className="bi bi-x-lg me-1" />
                 Clear
               </button>
@@ -173,7 +210,10 @@ export default function TransactionsPage() {
         <div className="card-body p-0">
           {loading ? (
             <div className="text-center py-5">
-              <div className="spinner-border spinner-border-sm" style={{ color: "var(--ui-main)" }} />
+              <div
+                className="spinner-border spinner-border-sm"
+                style={{ color: "var(--ui-main)" }}
+              />
               <p className="text-muted small mt-2 mb-0">Loading…</p>
             </div>
           ) : transactions.length === 0 ? (
@@ -200,11 +240,20 @@ export default function TransactionsPage() {
                 <tbody>
                   {transactions.map((tx) => (
                     <tr key={tx.id}>
-                      <td className="ps-4 text-muted" style={{ whiteSpace: "nowrap" }}>
+                      <td
+                        className="ps-4 text-muted"
+                        style={{ whiteSpace: "nowrap" }}
+                      >
                         {fmtDate(tx.transaction_date)}
                       </td>
                       <td>
-                        <span className={tx.type === "income" ? "badge-income" : "badge-expense"}>
+                        <span
+                          className={
+                            tx.type === "income"
+                              ? "badge-income"
+                              : "badge-expense"
+                          }
+                        >
                           {tx.type === "income" ? "Income" : "Expense"}
                         </span>
                       </td>
@@ -216,8 +265,11 @@ export default function TransactionsPage() {
                       >
                         {tx.description || "—"}
                       </td>
-                      <td className={`text-end fw-semibold ${tx.type === "income" ? "tx-amount-income" : "tx-amount-expense"}`}>
-                        {tx.type === "income" ? "+" : "-"}{fmt(tx.amount)}
+                      <td
+                        className={`text-end fw-semibold ${tx.type === "income" ? "tx-amount-income" : "tx-amount-expense"}`}
+                      >
+                        {tx.type === "income" ? "+" : "-"}
+                        {fmt(tx.amount)}
                       </td>
                       <td className="text-end pe-4">
                         <div className="d-flex gap-1 justify-content-end">
@@ -254,7 +306,8 @@ export default function TransactionsPage() {
         {totalPages > 1 && (
           <div className="card-footer bg-transparent d-flex align-items-center justify-content-between px-4 py-3">
             <span className="text-muted small">
-              Showing {page * PAGE_SIZE + 1}–{Math.min((page + 1) * PAGE_SIZE, count)} of {count}
+              Showing {page * PAGE_SIZE + 1}–
+              {Math.min((page + 1) * PAGE_SIZE, count)} of {count}
             </span>
             <div className="d-flex gap-1">
               <button
@@ -264,17 +317,21 @@ export default function TransactionsPage() {
               >
                 <i className="bi bi-chevron-left" />
               </button>
-              {Array.from({ length: Math.min(totalPages, 7) }, (_, i) => i + Math.max(0, page - 3)).map((p) => (
-                p < totalPages && (
-                  <button
-                    key={p}
-                    className={`btn btn-sm ${p === page ? "btn-primary" : "btn-outline-secondary"}`}
-                    onClick={() => setPage(p)}
-                  >
-                    {p + 1}
-                  </button>
-                )
-              ))}
+              {Array.from(
+                { length: Math.min(totalPages, 7) },
+                (_, i) => i + Math.max(0, page - 3),
+              ).map(
+                (p) =>
+                  p < totalPages && (
+                    <button
+                      key={p}
+                      className={`btn btn-sm ${p === page ? "btn-primary" : "btn-outline-secondary"}`}
+                      onClick={() => setPage(p)}
+                    >
+                      {p + 1}
+                    </button>
+                  ),
+              )}
               <button
                 className="btn btn-sm btn-outline-secondary"
                 disabled={page >= totalPages - 1}

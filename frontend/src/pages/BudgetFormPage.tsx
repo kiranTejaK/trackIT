@@ -1,9 +1,8 @@
-import { useState } from "react"
-import { Link, useNavigate } from "react-router-dom"
 import { useQueryClient } from "@tanstack/react-query"
+import { useId, useState } from "react"
+import { Link, useNavigate } from "react-router-dom"
 import { budgetsApi } from "@/api/budgets"
 import { EXPENSE_CATEGORIES } from "@/api/transactions"
-
 
 export default function BudgetFormPage() {
   const navigate = useNavigate()
@@ -14,19 +13,30 @@ export default function BudgetFormPage() {
   // Form state
   const [category, setCategory] = useState("")
   const [monthlyLimit, setMonthlyLimit] = useState("")
-  
+
   const now = new Date()
   const [month, setMonth] = useState(now.getMonth() + 1)
   const [year, setYear] = useState(now.getFullYear())
 
-  const addToast = (message: string, toastType: "success" | "error" | "info") => {
-    window.dispatchEvent(new CustomEvent("app-toast", { detail: { message, type: toastType } }))
+  const categoryId = useId()
+  const limitId = useId()
+  const monthId = useId()
+  const yearId = useId()
+
+  const addToast = (
+    message: string,
+    toastType: "success" | "error" | "info",
+  ) => {
+    window.dispatchEvent(
+      new CustomEvent("app-toast", { detail: { message, type: toastType } }),
+    )
   }
 
   const validate = (): boolean => {
     const errs: Record<string, string> = {}
     const amt = parseFloat(monthlyLimit)
-    if (!monthlyLimit || isNaN(amt) || amt <= 0) errs.monthlyLimit = "Limit must be greater than 0"
+    if (!monthlyLimit || Number.isNaN(amt) || amt <= 0)
+      errs.monthlyLimit = "Limit must be greater than 0"
     if (!category) errs.category = "Category is required"
     setErrors(errs)
     return Object.keys(errs).length === 0
@@ -41,7 +51,7 @@ export default function BudgetFormPage() {
       category,
       monthly_limit: parseFloat(monthlyLimit),
       month,
-      year
+      year,
     }
 
     try {
@@ -51,7 +61,9 @@ export default function BudgetFormPage() {
       setTimeout(() => navigate("/"), 1500)
     } catch (err: unknown) {
       const axiosErr = err as { response?: { data?: { detail?: string } } }
-      const detail = axiosErr?.response?.data?.detail || "Failed to create budget. A budget for this category and month might already exist."
+      const detail =
+        axiosErr?.response?.data?.detail ||
+        "Failed to create budget. A budget for this category and month might already exist."
       addToast(detail, "error")
     } finally {
       setSubmitting(false)
@@ -90,35 +102,40 @@ export default function BudgetFormPage() {
         <form onSubmit={handleSubmit} noValidate>
           {/* Category */}
           <div className="mb-4">
-            <label className="form-label fw-semibold" htmlFor="budget-category">
+            <label className="form-label fw-semibold" htmlFor={categoryId}>
               Expense Category <span className="text-danger">*</span>
             </label>
             <select
-              id="budget-category"
+              id={categoryId}
               className={`form-select ${errors.category ? "is-invalid" : ""}`}
               value={category}
               onChange={(e) => {
                 setCategory(e.target.value)
-                if (errors.category) setErrors((prev) => ({ ...prev, category: "" }))
+                if (errors.category)
+                  setErrors((prev) => ({ ...prev, category: "" }))
               }}
             >
               <option value="">Select an expense category…</option>
               {EXPENSE_CATEGORIES.map((c) => (
-                <option key={c} value={c}>{c}</option>
+                <option key={c} value={c}>
+                  {c}
+                </option>
               ))}
             </select>
-            {errors.category && <div className="invalid-feedback">{errors.category}</div>}
+            {errors.category && (
+              <div className="invalid-feedback">{errors.category}</div>
+            )}
           </div>
 
           {/* Monthly Limit */}
           <div className="mb-4">
-            <label className="form-label fw-semibold" htmlFor="budget-limit">
+            <label className="form-label fw-semibold" htmlFor={limitId}>
               Monthly Limit <span className="text-danger">*</span>
             </label>
             <div className="input-group">
               <span className="input-group-text">₹</span>
               <input
-                id="budget-limit"
+                id={limitId}
                 type="number"
                 className={`form-control ${errors.monthlyLimit ? "is-invalid" : ""}`}
                 placeholder="0.00"
@@ -127,39 +144,44 @@ export default function BudgetFormPage() {
                 value={monthlyLimit}
                 onChange={(e) => {
                   setMonthlyLimit(e.target.value)
-                  if (errors.monthlyLimit) setErrors((prev) => ({ ...prev, monthlyLimit: "" }))
+                  if (errors.monthlyLimit)
+                    setErrors((prev) => ({ ...prev, monthlyLimit: "" }))
                 }}
                 required
               />
-              {errors.monthlyLimit && <div className="invalid-feedback">{errors.monthlyLimit}</div>}
+              {errors.monthlyLimit && (
+                <div className="invalid-feedback">{errors.monthlyLimit}</div>
+              )}
             </div>
           </div>
 
           <div className="row g-3 mb-4">
             {/* Month */}
             <div className="col-6">
-              <label className="form-label fw-semibold" htmlFor="budget-month">
+              <label className="form-label fw-semibold" htmlFor={monthId}>
                 Month
               </label>
               <select
-                id="budget-month"
+                id={monthId}
                 className="form-select"
                 value={month}
                 onChange={(e) => setMonth(Number(e.target.value))}
               >
                 {months.map((m) => (
-                  <option key={m.value} value={m.value}>{m.label}</option>
+                  <option key={m.value} value={m.value}>
+                    {m.label}
+                  </option>
                 ))}
               </select>
             </div>
-            
+
             {/* Year */}
             <div className="col-6">
-              <label className="form-label fw-semibold" htmlFor="budget-year">
+              <label className="form-label fw-semibold" htmlFor={yearId}>
                 Year
               </label>
               <input
-                id="budget-year"
+                id={yearId}
                 type="number"
                 className="form-control"
                 value={year}

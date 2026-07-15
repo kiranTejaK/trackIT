@@ -1,12 +1,12 @@
-import { useEffect, useState } from "react"
-import { Link, useNavigate, useParams } from "react-router-dom"
 import { useQueryClient } from "@tanstack/react-query"
+import { useEffect, useId, useState } from "react"
+import { Link, useNavigate, useParams } from "react-router-dom"
+import type { TransactionType } from "@/api/transactions"
 import {
   EXPENSE_CATEGORIES,
   INCOME_CATEGORIES,
   transactionsApi,
 } from "@/api/transactions"
-import type { TransactionType } from "@/api/transactions"
 
 const today = () => new Date().toISOString().split("T")[0]
 
@@ -26,8 +26,18 @@ export default function TransactionFormPage() {
   const [description, setDescription] = useState("")
   const [transactionDate, setTransactionDate] = useState(today())
 
-  const addToast = (message: string, toastType: "success" | "error" | "info") => {
-    window.dispatchEvent(new CustomEvent("app-toast", { detail: { message, type: toastType } }))
+  const amountId = useId()
+  const categoryId = useId()
+  const dateId = useId()
+  const descId = useId()
+
+  const addToast = (
+    message: string,
+    toastType: "success" | "error" | "info",
+  ) => {
+    window.dispatchEvent(
+      new CustomEvent("app-toast", { detail: { message, type: toastType } }),
+    )
   }
 
   // Load existing transaction for edit
@@ -51,12 +61,14 @@ export default function TransactionFormPage() {
     setCategory("")
   }, [type])
 
-  const categoryOptions = type === "income" ? INCOME_CATEGORIES : EXPENSE_CATEGORIES
+  const categoryOptions =
+    type === "income" ? INCOME_CATEGORIES : EXPENSE_CATEGORIES
 
   const validate = (): boolean => {
     const errs: Record<string, string> = {}
     const amt = parseFloat(amount)
-    if (!amount || isNaN(amt) || amt <= 0) errs.amount = "Amount must be greater than 0"
+    if (!amount || Number.isNaN(amt) || amt <= 0)
+      errs.amount = "Amount must be greater than 0"
     if (!category) errs.category = "Category is required"
     if (!transactionDate) errs.transactionDate = "Date is required"
     setErrors(errs)
@@ -85,15 +97,18 @@ export default function TransactionFormPage() {
         const response = await transactionsApi.create(payload)
         addToast("Transaction added successfully.", "success")
         queryClient.invalidateQueries({ queryKey: ["dashboardSummary"] })
-        
+
         // Show insights and budget notifications if any
         if (response.insights && response.insights.length > 0) {
-          response.insights.forEach(insight => {
+          response.insights.forEach((insight) => {
             addToast(`Insight: ${insight.message}`, "info")
           })
         }
-        if (response.budget_notifications && response.budget_notifications.length > 0) {
-          response.budget_notifications.forEach(msg => {
+        if (
+          response.budget_notifications &&
+          response.budget_notifications.length > 0
+        ) {
+          response.budget_notifications.forEach((msg) => {
             addToast(`Budget: ${msg}`, "info")
           })
         }
@@ -101,7 +116,9 @@ export default function TransactionFormPage() {
       setTimeout(() => navigate("/transactions"), 2500) // increased timeout slightly to let user read toasts
     } catch (err: unknown) {
       const axiosErr = err as { response?: { data?: { detail?: string } } }
-      const detail = axiosErr?.response?.data?.detail || "Something went wrong. Please try again."
+      const detail =
+        axiosErr?.response?.data?.detail ||
+        "Something went wrong. Please try again."
       addToast(detail, "error")
     } finally {
       setSubmitting(false)
@@ -117,13 +134,21 @@ export default function TransactionFormPage() {
         </Link>
         <div>
           <h1>{isEdit ? "Edit Transaction" : "Add Transaction"}</h1>
-          <p>{isEdit ? "Update the transaction details below" : "Record a new income or expense"}</p>
+          <p>
+            {isEdit
+              ? "Update the transaction details below"
+              : "Record a new income or expense"}
+          </p>
         </div>
       </div>
 
       {loading ? (
         <div className="text-center py-5">
-          <div className="spinner-border" style={{ color: "var(--ui-main)" }} role="status" />
+          <div
+            className="spinner-border"
+            style={{ color: "var(--ui-main)" }}
+            role="status"
+          />
         </div>
       ) : (
         <div className="form-card shadow-sm mx-auto">
@@ -146,7 +171,9 @@ export default function TransactionFormPage() {
                     onClick={() => setType(t)}
                     style={{ borderRadius: 10 }}
                   >
-                    <i className={`bi ${t === "income" ? "bi-arrow-down-circle" : "bi-arrow-up-circle"} me-2`} />
+                    <i
+                      className={`bi ${t === "income" ? "bi-arrow-down-circle" : "bi-arrow-up-circle"} me-2`}
+                    />
                     {t === "income" ? "Income" : "Expense"}
                   </button>
                 ))}
@@ -155,13 +182,13 @@ export default function TransactionFormPage() {
 
             {/* Amount */}
             <div className="mb-4">
-              <label className="form-label fw-semibold" htmlFor="tx-amount">
+              <label className="form-label fw-semibold" htmlFor={amountId}>
                 Amount <span className="text-danger">*</span>
               </label>
               <div className="input-group">
                 <span className="input-group-text">₹</span>
                 <input
-                  id="tx-amount"
+                  id={amountId}
                   type="number"
                   className={`form-control ${errors.amount ? "is-invalid" : ""}`}
                   placeholder="0.00"
@@ -170,50 +197,59 @@ export default function TransactionFormPage() {
                   value={amount}
                   onChange={(e) => {
                     setAmount(e.target.value)
-                    if (errors.amount) setErrors((prev) => ({ ...prev, amount: "" }))
+                    if (errors.amount)
+                      setErrors((prev) => ({ ...prev, amount: "" }))
                   }}
                   required
                 />
-                {errors.amount && <div className="invalid-feedback">{errors.amount}</div>}
+                {errors.amount && (
+                  <div className="invalid-feedback">{errors.amount}</div>
+                )}
               </div>
             </div>
 
             {/* Category */}
             <div className="mb-4">
-              <label className="form-label fw-semibold" htmlFor="tx-category">
+              <label className="form-label fw-semibold" htmlFor={categoryId}>
                 Category <span className="text-danger">*</span>
               </label>
               <select
-                id="tx-category"
+                id={categoryId}
                 className={`form-select ${errors.category ? "is-invalid" : ""}`}
                 value={category}
                 onChange={(e) => {
                   setCategory(e.target.value)
-                  if (errors.category) setErrors((prev) => ({ ...prev, category: "" }))
+                  if (errors.category)
+                    setErrors((prev) => ({ ...prev, category: "" }))
                 }}
               >
                 <option value="">Select a category…</option>
                 {categoryOptions.map((c) => (
-                  <option key={c} value={c}>{c}</option>
+                  <option key={c} value={c}>
+                    {c}
+                  </option>
                 ))}
               </select>
-              {errors.category && <div className="invalid-feedback">{errors.category}</div>}
+              {errors.category && (
+                <div className="invalid-feedback">{errors.category}</div>
+              )}
             </div>
 
             {/* Date */}
             <div className="mb-4">
-              <label className="form-label fw-semibold" htmlFor="tx-date">
+              <label className="form-label fw-semibold" htmlFor={dateId}>
                 Transaction Date <span className="text-danger">*</span>
               </label>
               <input
-                id="tx-date"
+                id={dateId}
                 type="date"
                 className={`form-control ${errors.transactionDate ? "is-invalid" : ""}`}
                 value={transactionDate}
                 max={today()}
                 onChange={(e) => {
                   setTransactionDate(e.target.value)
-                  if (errors.transactionDate) setErrors((prev) => ({ ...prev, transactionDate: "" }))
+                  if (errors.transactionDate)
+                    setErrors((prev) => ({ ...prev, transactionDate: "" }))
                 }}
               />
               {errors.transactionDate && (
@@ -223,11 +259,12 @@ export default function TransactionFormPage() {
 
             {/* Description */}
             <div className="mb-4">
-              <label className="form-label fw-semibold" htmlFor="tx-desc">
-                Description <span className="text-muted fw-normal">(optional)</span>
+              <label className="form-label fw-semibold" htmlFor={descId}>
+                Description{" "}
+                <span className="text-muted fw-normal">(optional)</span>
               </label>
               <textarea
-                id="tx-desc"
+                id={descId}
                 className="form-control"
                 rows={3}
                 placeholder="Add a note about this transaction…"
@@ -253,7 +290,9 @@ export default function TransactionFormPage() {
                   </>
                 ) : (
                   <>
-                    <i className={`bi ${isEdit ? "bi-check-circle" : "bi-plus-circle"} me-2`} />
+                    <i
+                      className={`bi ${isEdit ? "bi-check-circle" : "bi-plus-circle"} me-2`}
+                    />
                     {isEdit ? "Update Transaction" : "Save Transaction"}
                   </>
                 )}

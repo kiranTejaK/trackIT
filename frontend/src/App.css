@@ -6,9 +6,9 @@
 
 :root {
   /* Brand Colors */
-  --ui-main: #2563eb;       /* Blue 600 (Secondary) */
+  --ui-main: #2563eb; /* Blue 600 (Secondary) */
   --ui-main-light: #eff6ff; /* Blue 50 (Tertiary) */
-  --ui-main-dark: #1e3a8a;  /* Blue 900 (Primary) */
+  --ui-main-dark: #1e3a8a; /* Blue 900 (Primary) */
 
   /* Status Colors */
   --income-color: #22c55e;
@@ -29,8 +29,8 @@
 }
 
 .card {
-  background-color: var(--bg-card) !important;
-  border-color: var(--border-color) !important;
+  background-color: var(--bg-card);
+  border-color: var(--border-color);
   color: var(--bs-body-color);
 }
 
@@ -72,7 +72,9 @@ body {
    Sidebar
    ================================================================ */
 .sidebar-link {
-  transition: background-color 0.15s ease, color 0.15s ease;
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease;
   font-size: 0.875rem;
   font-weight: 500;
 }
@@ -82,8 +84,8 @@ body {
 }
 
 .sidebar-link.active {
-  background-color: var(--ui-main) !important;
-  color: #fff !important;
+  background-color: var(--ui-main);
+  color: #fff;
 }
 
 /* ================================================================
@@ -115,14 +117,16 @@ a,
   border: none;
   border-radius: 16px;
   padding: 24px;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
   position: relative;
   overflow: hidden;
 }
 
 .stat-card:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12) !important;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
 }
 
 .stat-card .stat-icon {
@@ -157,28 +161,36 @@ a,
 /* Card accent variants */
 .stat-card-income {
   background: var(--income-bg);
-  border-left: 4px solid var(--income-color) !important;
+  border-left: 4px solid var(--income-color);
 }
 
 .stat-card-expense {
   background: var(--expense-bg);
-  border-left: 4px solid var(--expense-color) !important;
+  border-left: 4px solid var(--expense-color);
 }
 
 .stat-card-balance {
   background: var(--balance-bg);
-  border-left: 4px solid var(--balance-color) !important;
+  border-left: 4px solid var(--balance-color);
 }
 
 .stat-card-total {
   background: var(--ui-main-light);
-  border-left: 4px solid var(--ui-main) !important;
+  border-left: 4px solid var(--ui-main);
 }
 
-[data-bs-theme="dark"] .stat-card-income { background: rgba(34,197,94,0.08); }
-[data-bs-theme="dark"] .stat-card-expense { background: rgba(239,68,68,0.08); }
-[data-bs-theme="dark"] .stat-card-balance { background: rgba(59,130,246,0.08); }
-[data-bs-theme="dark"] .stat-card-total { background: rgba(249,115,22,0.08); }
+[data-bs-theme="dark"] .stat-card-income {
+  background: rgba(34, 197, 94, 0.08);
+}
+[data-bs-theme="dark"] .stat-card-expense {
+  background: rgba(239, 68, 68, 0.08);
+}
+[data-bs-theme="dark"] .stat-card-balance {
+  background: rgba(59, 130, 246, 0.08);
+}
+[data-bs-theme="dark"] .stat-card-total {
+  background: rgba(249, 115, 22, 0.08);
+}
 
 /* ================================================================
    Transaction Type Badges
@@ -204,13 +216,13 @@ a,
 }
 
 [data-bs-theme="dark"] .badge-income {
-  background-color: rgba(34,197,94,0.12);
-  border-color: rgba(34,197,94,0.3);
+  background-color: rgba(34, 197, 94, 0.12);
+  border-color: rgba(34, 197, 94, 0.3);
 }
 
 [data-bs-theme="dark"] .badge-expense {
-  background-color: rgba(239,68,68,0.12);
-  border-color: rgba(239,68,68,0.3);
+  background-color: rgba(239, 68, 68, 0.12);
+  border-color: rgba(239, 68, 68, 0.3);
 }
 
 /* ================================================================
@@ -315,13 +327,25 @@ a,
   gap: 10px;
 }
 
-.toast-item.toast-success { border-left: 4px solid var(--income-color); }
-.toast-item.toast-error   { border-left: 4px solid var(--expense-color); }
-.toast-item.toast-info    { border-left: 4px solid var(--balance-color); }
+.toast-item.toast-success {
+  border-left: 4px solid var(--income-color);
+}
+.toast-item.toast-error {
+  border-left: 4px solid var(--expense-color);
+}
+.toast-item.toast-info {
+  border-left: 4px solid var(--balance-color);
+}
 
 @keyframes toast-in {
-  from { opacity: 0; transform: translateX(20px); }
-  to   { opacity: 1; transform: translateX(0); }
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
 /* ================================================================
@@ -377,7 +401,7 @@ a,
 }
 
 .bg-body-tertiary {
-  background-color: var(--bs-tertiary-bg) !important;
+  background-color: var(--bs-tertiary-bg);
 }
 
 /* Insights Ticker */
@@ -433,7 +457,10 @@ a,
 }
 
 @keyframes marquee {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
 }
-

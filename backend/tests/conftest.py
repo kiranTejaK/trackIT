@@ -10,7 +10,7 @@ from app.core.config import settings
 settings.ENVIRONMENT = "local"
 from app.core.db import init_db  # noqa: E402
 from app.main import app  # noqa: E402
-from app.models import Item, User  # noqa: E402
+from app.models import Budget, Transaction, User  # noqa: E402
 from tests.utils.user import authentication_token_from_email  # noqa: E402
 from tests.utils.utils import get_superuser_token_headers  # noqa: E402
 
@@ -24,7 +24,9 @@ def db() -> Generator[Session, None, None]:
     with Session(engine) as session:
         init_db(session)
         yield session
-        statement = delete(Item)
+        statement = delete(Transaction)
+        session.execute(statement)
+        statement = delete(Budget)
         session.execute(statement)
         statement = delete(User)
         session.execute(statement)

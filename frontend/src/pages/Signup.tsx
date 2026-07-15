@@ -41,7 +41,12 @@ export default function Signup() {
         style={{ maxWidth: "400px", width: "100%" }}
       >
         <div className="text-center mb-4">
-          <img src={Logo} alt="TrackIT" className="logo-img mb-3" style={{ maxWidth: "180px" }} />
+          <img
+            src={Logo}
+            alt="TrackIT"
+            className="logo-img mb-3"
+            style={{ maxWidth: "180px" }}
+          />
           <h2 className="fw-bold">Create an Account</h2>
           <p className="text-muted">Join TrackIT to manage your finances</p>
         </div>

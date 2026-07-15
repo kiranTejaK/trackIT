@@ -31,7 +31,12 @@ export default function Login() {
         style={{ maxWidth: "400px", width: "100%" }}
       >
         <div className="text-center mb-4">
-          <img src={Logo} alt="TrackIT" className="logo-img mb-3" style={{ maxWidth: "180px" }} />
+          <img
+            src={Logo}
+            alt="TrackIT"
+            className="logo-img mb-3"
+            style={{ maxWidth: "180px" }}
+          />
           <h2 className="fw-bold">Welcome Back</h2>
           <p className="text-muted">Sign in to continue to TrackIT</p>
         </div>

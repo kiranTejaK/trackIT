@@ -95,7 +95,9 @@ const Sidebar = () => {
             style={{ height: "40px" }}
             title={isCollapsed ? "Expand Sidebar" : "Collapse Sidebar"}
           >
-            <i className={`bi ${isCollapsed ? "bi-chevron-right" : "bi-chevron-left"}`} />
+            <i
+              className={`bi ${isCollapsed ? "bi-chevron-right" : "bi-chevron-left"}`}
+            />
           </button>
         </div>
       </div>

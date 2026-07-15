@@ -62,14 +62,24 @@ export interface CategorySummary {
 
 export const dashboardApi = {
   getSummary: (year?: number, month?: number): Promise<DashboardSummary> =>
-    api.get("/api/v1/dashboard/summary", { params: { year, month } }).then((r) => r.data),
+    api
+      .get("/api/v1/dashboard/summary", { params: { year, month } })
+      .then((r) => r.data),
 
   getMonthlySummary: (year?: number, month?: number): Promise<MonthlySummary> =>
-    api.get("/api/v1/summary/monthly", { params: { year, month } }).then((r) => r.data),
+    api
+      .get("/api/v1/summary/monthly", { params: { year, month } })
+      .then((r) => r.data),
 
-  getCategorySummary: (type?: "income" | "expense"): Promise<CategorySummary[]> =>
-    api.get("/api/v1/summary/categories", { params: { type } }).then((r) => r.data),
+  getCategorySummary: (
+    type?: "income" | "expense",
+  ): Promise<CategorySummary[]> =>
+    api
+      .get("/api/v1/summary/categories", { params: { type } })
+      .then((r) => r.data),
 
   getRecent: (limit = 10): Promise<Transaction[]> =>
-    api.get("/api/v1/summary/recent", { params: { limit } }).then((r) => r.data),
+    api
+      .get("/api/v1/summary/recent", { params: { limit } })
+      .then((r) => r.data),
 }

@@ -14,7 +14,9 @@ export interface BudgetUpdate {
 
 export const budgetsApi = {
   list: (month: number, year: number): Promise<BudgetProgress[]> =>
-    api.get("/api/v1/budgets/", { params: { month, year } }).then((r) => r.data),
+    api
+      .get("/api/v1/budgets/", { params: { month, year } })
+      .then((r) => r.data),
 
   create: (data: BudgetCreate): Promise<BudgetProgress> =>
     api.post("/api/v1/budgets/", data).then((r) => r.data),

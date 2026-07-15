@@ -1,27 +1,25 @@
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import { StrictMode } from "react"
 import ReactDOM from "react-dom/client"
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom"
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import "./App.css"
 
 import NotFound from "./components/Common/NotFound"
-
-// Layout
-import Layout from "./pages/Layout"
-
-// Auth pages
-import Login from "./pages/Login"
-import Signup from "./pages/Signup"
-import RecoverPassword from "./pages/RecoverPassword"
-import ResetPassword from "./pages/ResetPassword"
-
-// TrackIT pages
-import Dashboard from "./pages/Dashboard"
-import TransactionFormPage from "./pages/TransactionFormPage"
-import TransactionsPage from "./pages/TransactionsPage"
-import SettingsPage from "./pages/SettingsPage"
 import BudgetFormPage from "./pages/BudgetFormPage"
 import BudgetsPage from "./pages/BudgetsPage"
+// TrackIT pages
+import Dashboard from "./pages/Dashboard"
+// Layout
+import Layout from "./pages/Layout"
+// Auth pages
+import Login from "./pages/Login"
+import RecoverPassword from "./pages/RecoverPassword"
+import ResetPassword from "./pages/ResetPassword"
+import SettingsPage from "./pages/SettingsPage"
+import Signup from "./pages/Signup"
+import TransactionFormPage from "./pages/TransactionFormPage"
+import TransactionsPage from "./pages/TransactionsPage"
+
 // Theme init
 const savedTheme = localStorage.getItem("theme") || "light"
 document.documentElement.setAttribute("data-bs-theme", savedTheme)
@@ -104,7 +102,10 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
             <Route index element={<Dashboard />} />
             <Route path="transactions" element={<TransactionsPage />} />
             <Route path="transactions/new" element={<TransactionFormPage />} />
-            <Route path="transactions/:id/edit" element={<TransactionFormPage />} />
+            <Route
+              path="transactions/:id/edit"
+              element={<TransactionFormPage />}
+            />
             <Route path="budgets" element={<BudgetsPage />} />
             <Route path="budgets/new" element={<BudgetFormPage />} />
             <Route path="settings" element={<SettingsPage />} />

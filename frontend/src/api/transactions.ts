@@ -50,7 +50,13 @@ export interface ListTransactionParams {
   date_to?: string
 }
 
-export const INCOME_CATEGORIES = ["Salary", "Freelance", "Bonus", "Interest", "Other Income"]
+export const INCOME_CATEGORIES = [
+  "Salary",
+  "Freelance",
+  "Bonus",
+  "Interest",
+  "Other Income",
+]
 export const EXPENSE_CATEGORIES = [
   "Food",
   "Travel",

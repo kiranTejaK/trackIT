@@ -1,5 +1,5 @@
+import { useEffect, useRef, useState } from "react"
 import { Outlet } from "react-router-dom"
-import { useEffect, useState, useRef } from "react"
 import Navbar from "../components/Common/Navbar"
 import Sidebar from "../components/Common/Sidebar"
 
@@ -19,7 +19,10 @@ export default function Layout() {
       const { message, type } = customEvent.detail
       const toastId = ++toastCounter.current
       setToasts((prev) => [...prev, { id: toastId, message, type }])
-      setTimeout(() => setToasts((prev) => prev.filter((t) => t.id !== toastId)), 8000)
+      setTimeout(
+        () => setToasts((prev) => prev.filter((t) => t.id !== toastId)),
+        8000,
+      )
     }
 
     window.addEventListener("app-toast", handleToast)
@@ -32,7 +35,9 @@ export default function Layout() {
       <div className="toast-container-custom">
         {toasts.map((t) => (
           <div key={t.id} className={`toast-item toast-${t.type}`}>
-            <i className={`bi ${t.type === "success" ? "bi-check-circle text-success" : t.type === "error" ? "bi-x-circle text-danger" : "bi-info-circle text-info"}`} />
+            <i
+              className={`bi ${t.type === "success" ? "bi-check-circle text-success" : t.type === "error" ? "bi-x-circle text-danger" : "bi-info-circle text-info"}`}
+            />
             <span style={{ fontSize: "0.875rem" }}>{t.message}</span>
           </div>
         ))}
@@ -44,7 +49,10 @@ export default function Layout() {
         style={{ minHeight: "100vh", minWidth: 0 }}
       >
         <Navbar />
-        <main className="flex-grow-1 overflow-auto p-3 p-md-4" style={{ minWidth: 0 }}>
+        <main
+          className="flex-grow-1 overflow-auto p-3 p-md-4"
+          style={{ minWidth: 0 }}
+        >
           <Outlet />
         </main>
       </div>

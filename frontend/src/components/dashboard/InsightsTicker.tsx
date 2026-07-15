@@ -6,11 +6,17 @@ interface Props {
 
 export default function InsightsTicker({ insights }: Props) {
   const hasInsights = insights && insights.length > 0
-  
+
   // If no insights, provide a default positive message
-  const activeInsights = hasInsights 
-    ? insights 
-    : [{ message: "Your spending looks perfectly normal this month. Keep up the good work!", type: "INFO" }] as any
+  const activeInsights = hasInsights
+    ? insights
+    : ([
+        {
+          message:
+            "Your spending looks perfectly normal this month. Keep up the good work!",
+          type: "INFO",
+        },
+      ] as any)
 
   // Duplicate the insights to create a seamless infinite loop
   const displayInsights = [...activeInsights, ...activeInsights]
@@ -18,7 +24,7 @@ export default function InsightsTicker({ insights }: Props) {
   return (
     <div className="insights-ticker-container shadow-sm mb-4">
       <div className="insights-ticker-label">
-        <i className="bi bi-lightbulb-fill me-2" style={{ color: "#f59e0b" }}></i>
+        <i className="bi bi-lightbulb-fill me-2" style={{ color: "#f59e0b" }} />
         Smart Insights
       </div>
       <div className="insights-ticker-wrap">
