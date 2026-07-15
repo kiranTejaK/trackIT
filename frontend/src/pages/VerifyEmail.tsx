@@ -17,7 +17,7 @@ export default function VerifyEmail() {
       return
     }
     api
-      .post("/api/v1/verify-email", { token })
+      .post("/api/v1/login/verify-email", { token })
       .then(() => setStatus("success"))
       .catch((err) => {
         setStatus("error")
