@@ -1,7 +1,7 @@
 # TrackIT — The "Smart" Mini-Ledger
 **Bytex Financial Ltd. Full Stack Engineer Challenge Submission**
 
-![Dashboard Screenshot](/docs/screenshots/dashboard_placeholder.png)
+![Dashboard Screenshot](docs/screenshots/dashboard.png)
 
 ## Overview
 TrackIT is a lightweight, full-stack financial ledger application designed to help individuals track their income and expenses, visualize their spending, set category-based budgets, and receive automated insights and email notifications. 
@@ -12,7 +12,7 @@ It was built with a specific focus on robust architecture, polished aesthetics, 
 
 ## 🏗️ System Architecture
 
-![System Architecture](/docs/screenshots/architecture_diagram.png)
+![System Architecture](docs/screenshots/architecture_diagram.png)
 ### How it works:
 * **Frontend Client (React 19 + Vite)**: A lightning-fast, single-page application built with React and TypeScript. It communicates securely via REST APIs (using Axios) with JWT authentication.
 * **Backend API (FastAPI)**: A high-performance Python backend that handles business logic, JWT validation, and complex financial aggregations.
@@ -26,10 +26,10 @@ It was built with a specific focus on robust architecture, polished aesthetics, 
 
 | Feature | Screenshot |
 |---------|------------|
-| **Dashboard & Insights** | ![Dashboard Placeholder](/docs/screenshots/dashboard_placeholder.png) |
-| **Transaction Management** | ![Transactions Placeholder](/docs/screenshots/transactions_placeholder.png) |
-| **Category Budgets** | ![Budgets Placeholder](/docs/screenshots/budgets_placeholder.png) |
-| **Email Alert System** | ![Email Alert Placeholder](/docs/screenshots/email_alert_placeholder.png) |
+| **Dashboard & Insights** | ![Dashboard Placeholder](docs/screenshots/dashboard.png) |
+| **Transaction Management** | ![Transactions Placeholder](docs/screenshots/transactions.png) |
+| **Category Budgets** | ![Budgets Placeholder](docs/screenshots/budgets.png) |
+| **Email Alert System** | ![Email Alert Placeholder](docs/screenshots/email_notification.png) |
 
 ---
 
