@@ -27,11 +27,11 @@
   <div class="container">
     <div class="header">
       <div class="icon">🔴</div>
-      <h1>Monthly Budget Exceeded</h1>
+      <h1>{{ category }} Budget Exceeded</h1>
     </div>
     <div class="body">
       <p>Hi <strong>{{ user_name }}</strong>,</p>
-      <p>Your monthly expenses in <strong>{{ project_name }}</strong> have crossed your configured budget limit this month.</p>
+      <p>Your monthly expenses in <strong>{{ project_name }}</strong> have crossed your configured <strong>{{ category }}</strong> budget limit this month.</p>
       <div class="stats">
         <div class="stat-box spent">
           <div class="label">Total Spent</div>

@@ -50,15 +50,15 @@ def check_expense_threshold(*, user: User, amount: Decimal) -> None:
     _send_notification(email_to=user.email, email_data=email_data)
 
 
-def check_monthly_budget(*, user: User, month_total: Decimal) -> None:
-    """Send alert if monthly expenses exceed the configured budget limit."""
-    limit = Decimal(str(settings.MONTHLY_BUDGET_LIMIT))
+def check_category_budget_alert(*, user: User, category: str, month_total: Decimal, limit: Decimal) -> None:
+    """Send alert if monthly expenses for a category exceed the configured budget limit."""
     if month_total <= limit:
         return
 
     logger.info(
-        "Monthly budget alert triggered for user=%s month_total=%s limit=%s",
+        "Category budget alert triggered for user=%s category=%s month_total=%s limit=%s",
         user.email,
+        category,
         month_total,
         limit,
     )
@@ -66,6 +66,7 @@ def check_monthly_budget(*, user: User, month_total: Decimal) -> None:
 
     email_data = generate_monthly_budget_alert_email(
         user_name=user.full_name or user.email,
+        category=category,
         month_total=float(month_total),
         budget_limit=float(limit),
     )

@@ -268,14 +268,15 @@ def generate_expense_alert_email(
 
 
 def generate_monthly_budget_alert_email(
-    user_name: str, month_total: float, budget_limit: float
+    user_name: str, category: str, month_total: float, budget_limit: float
 ) -> EmailData:
-    subject = f"[TrackIT] 🔴 Monthly budget exceeded: ₹{month_total:,.2f}"
+    subject = f"[TrackIT] 🔴 {category} budget exceeded: ₹{month_total:,.2f}"
     html_content = render_email_template(
         template_name="monthly_budget_alert.html",
         context={
             "project_name": settings.PROJECT_NAME,
             "user_name": user_name,
+            "category": category,
             "month_total": f"{month_total:,.2f}",
             "budget_limit": f"{budget_limit:,.2f}",
             "year": datetime.now().year,
