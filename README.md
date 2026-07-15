@@ -10,6 +10,18 @@ It was built with a specific focus on robust architecture, polished aesthetics, 
 
 ---
 
+## 🌐 Live Demo
+
+**Application:** https://trackit.doitapp.xyz
+**API Documentation (Swagger):** https://api.trackit.doitapp.xyz/docs
+
+> **Demo Account**
+>
+> **Email:** `admin@trackit.com`  
+> **Password:** `password1234`
+
+---
+
 ## 🏗️ System Architecture
 
 ![System Architecture](docs/screenshots/architecture_diagram.png)
@@ -26,10 +38,11 @@ It was built with a specific focus on robust architecture, polished aesthetics, 
 
 | Feature | Screenshot |
 |---------|------------|
-| **Dashboard & Insights** | ![Dashboard Placeholder](docs/screenshots/dashboard.png) |
-| **Transaction Management** | ![Transactions Placeholder](docs/screenshots/transactions.png) |
-| **Category Budgets** | ![Budgets Placeholder](docs/screenshots/budgets.png) |
-| **Email Alert System** | ![Email Alert Placeholder](docs/screenshots/email_notification.png) |
+| **Login Page** | ![Login Page](docs/screenshots/login_page.png) |
+| **Dashboard & Insights** | ![Dashboard](docs/screenshots/dashboard.png) |
+| **Transaction Management** | ![Transactions](docs/screenshots/transactions.png) |
+| **Category Budgets** | ![Budgets](docs/screenshots/budgets.png) |
+| **Email Alert System** | ![Email Alert](docs/screenshots/email_notification.png) |
 
 ---
 
