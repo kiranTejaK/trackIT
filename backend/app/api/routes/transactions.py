@@ -25,7 +25,7 @@ from app.schemas import (
     TransactionUpdate,
     TransactionWithInsights,
 )
-
+from app.services.notification_service import check_category_budget_alert
 logger = structlog.get_logger()
 
 router = APIRouter(prefix="/transactions", tags=["transactions"])
@@ -82,7 +82,6 @@ async def create_transaction_endpoint(
             progress = BudgetService.get_progress(session, budget)
             if progress.status == "EXCEEDED":
                 budget_notifications.append(f"You exceeded your {db_tx.category} budget by ₹{abs(progress.remaining):.2f}.")
-                from app.services.notification_service import check_category_budget_alert
                 check_category_budget_alert(
                     user=current_user,
                     category=db_tx.category,
