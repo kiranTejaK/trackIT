@@ -23,7 +23,7 @@ dependencies = [
     "pyjwt<3.0.0,>=2.8.0",
     "redis>=5.0.0",
     "structlog>=24.1.0",
-    "boto3>=1.34.0",
+    "boto3>=1.43.48",
     "sqlmodel>=0.0.16",
 ]
 
